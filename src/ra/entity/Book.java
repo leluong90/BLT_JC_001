@@ -253,7 +253,11 @@ public class Book implements IEntity , Serializable {
                     isExit = false;
                     break;
                 default:
+<<<<<<< HEAD
                     System.err.println("Please enter 1-8");
+=======
+                    System.out.println("Please enter 1-8");
+>>>>>>> origin/main
                     break;
 
             }

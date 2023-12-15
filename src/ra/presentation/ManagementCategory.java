@@ -17,13 +17,13 @@ public class ManagementCategory {
 
         do {
             try {
-                System.out.println("===== Category Management =====\n" +
-                        "1. Add Category\n" +
-                        "2. Display list by name A – Z\n" +
-                        "3. Genre statistics and number of books in each category\n" +
-                        "4. Update Category\n" +
-                        "5. Delete Category\n" +
-                        "6. Exit");
+                System.out.println("===== QUẢN LÝ THỂ LOẠI =====\n" +
+                        "1. Thêm mới thể loại\n" +
+                        "2. Hiển thị danh sách theo tên A – Z\n" +
+                        "3. Thống kê thể loại và số sách có trong mỗi thể loại\n" +
+                        "4. Cập nhật thể loại\n" +
+                        "5. Xóa thể loại\n" +
+                        "6. Quay lại");
                 System.out.println("Please , enter 1-6 :");
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice){
@@ -51,7 +51,7 @@ public class ManagementCategory {
 
                         break;
                     default:
-                        System.err.println("Enter 1-6");
+                        System.out.println("Enter 1-6");
                         break;
                 }
 

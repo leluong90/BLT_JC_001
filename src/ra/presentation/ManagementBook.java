@@ -16,13 +16,13 @@ public class ManagementBook {
         boolean isExit = true ;
         do {
             try {
-                System.out.println("===== Book Management =====\n" +
-                        "1. Add Book\n" +
-                        "2. Update Book\n" +
-                        "3. Delete Book\n" +
-                        "4. Search Book \n" +
-                        "5. Displays a list of books by category\n" +
-                        "6. Exit\n");
+                System.out.println("===== QUẢN LÝ SÁCH =====\n" +
+                        "1. Thêm mới sách\n" +
+                        "2. Cập nhật thông tin sách\n" +
+                        "3. Xóa sách\n" +
+                        "4. Tìm kiếm sách \n" +
+                        "5. Hiển thị danh sách sách theo nhóm thể loại\n" +
+                        "6. Quay lại\n");
                 System.out.println("Enter 1-6 :");
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice){
@@ -51,7 +51,7 @@ public class ManagementBook {
 
                         break;
                     default:
-                        System.err.println("Please , enter 1-6 :");
+                        System.out.println("Please , enter 1-6 :");
                         break;
 
             }
