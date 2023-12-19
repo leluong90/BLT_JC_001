@@ -6,10 +6,11 @@ import java.io.Serializable;
 import java.time.Year;
 import java.util.Scanner;
 
+import static ra.presentation.ManagementBook.ANSI_CYAN;
 import static ra.presentation.ManagementBook.listBook;
 import static ra.presentation.ManagementCategory.listCategory;
 
-public class Book implements IEntity , Serializable {
+public class Book implements IEntity, Serializable {
     private String id;
     private String title;
     private String author;
@@ -34,7 +35,7 @@ public class Book implements IEntity , Serializable {
     @Override
     public void input(Scanner scanner) {
         System.out.println("Enter book id :");
-        this.id = checkId(scanner);
+        this.id = checkId(scanner) ;
         System.out.println("Enter book title :");
         this.title = checkTitle(scanner);
         System.out.println("Enter author :");
@@ -51,37 +52,39 @@ public class Book implements IEntity , Serializable {
 
     @Override
     public void output() {
-        System.out.printf("| %-4s | %-20s | %-15s | %-15s | %-4d | %-20s | %-6d |\n",
-                this.id , this.title, this.author , this.publisher , this.year , this.description , this.categoryId);
-//
-//        System.out.println("Book id : " + this.id);
-//        System.out.println("Title : " + this.title);
-//        System.out.println("Author : " + this.author);
-//        System.out.println("Pulisher : " + this.publisher);
-//        System.out.println("Year : " + this.year);
-//        System.out.println("Description : " + this.description);
-//        System.out.println("Category id : " + this.categoryId);
+        System.out.println(ANSI_CYAN+"+------+----------------------+-----------------+-----------------+------+----------------------+-----------+");
+        System.out.println(ANSI_CYAN+"|BookId|         Title        |      Author     |      Publisher  | Year |     Description      |Category Id|");
+        System.out.println(ANSI_CYAN+"+------+----------------------+-----------------+-----------------+------+----------------------+-----------+");
+        System.out.printf(ANSI_CYAN+"| %-4s | %-20s | %-15s | %-15s | %-4d | %-20s | %-9d |\n",
+                this.id, this.title, this.author, this.publisher, this.year, this.description, this.categoryId);
+        System.out.println(ANSI_CYAN+"+------+----------------------+-----------------+-----------------+------+----------------------+-----------+");
+
     }
 
     public String checkId(Scanner scanner) {
         do {
             try {
+                Boolean isExists = false;
                 String checkId = scanner.nextLine();
                 if (checkId.length() == 4 && checkId.startsWith("B")) {
-                    Boolean isUniqueId = true;
                     for (Book book : listBook) {
-                        if (book.getId() == checkId) {
-                            isUniqueId = false;
+                        if (book.getId().equals(checkId)) {
+                            isExists = true;
                             break;
                         }
                     }
-                    return checkId;
+                    if (!isExists) {
+                        return checkId;
+                    } else {
+                        System.err.println("Exists book id");
+                    }
 
                 } else {
-                    System.err.println("Book id have 4 character and first character is B ");
+                    System.err.println("Book id must have 4 character and first character is B ");
                 }
+
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.err.println("Book id must have 4 character and first character is B ");
             }
         } while (true);
 
@@ -92,20 +95,22 @@ public class Book implements IEntity , Serializable {
             try {
                 boolean isExists = false;
                 String checkTitle = scanner.nextLine();
-                if (checkTitle.trim().length() >= 6 && checkTitle.trim().length() <= 50) {
-                    for (Book book : listBook) {
-                        if (book.getTitle().equals(checkTitle)) {
-                            isExists = true;
-                            break;
-                        }
+                for (Book book : listBook) {
+                    if (book.getTitle().equals(checkTitle)) {
+                        isExists = true;
+                        break;
                     }
-                    if (!isExists){
-                        return checkTitle;
-                    }
-                } else {
-                    System.err.println("Title have 6-30 character and not exists ");
                 }
+                if (isExists) {
+                    System.err.println("Exist title !");
+                }else {
+                    if (checkTitle.trim().length() >= 6 && checkTitle.trim().length() <= 50) {
+                        return checkTitle ;
+                    } else {
+                        System.err.println("Title have 6-30 character !");
+                    }
 
+                }
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -117,7 +122,7 @@ public class Book implements IEntity , Serializable {
             try {
                 String checkAuthor = scanner.nextLine();
                 if (checkAuthor.trim().isEmpty()) {
-                    System.out.println("Not empty author");
+                    System.err.println("Not empty author");
                 } else {
                     return checkAuthor;
                 }
@@ -133,7 +138,7 @@ public class Book implements IEntity , Serializable {
             try {
                 String checkPublisher = scanner.nextLine();
                 if (checkPublisher.trim().isEmpty()) {
-                    System.out.println("Not empty publisher");
+                    System.err.println("Not empty publisher");
                 } else {
                     return checkPublisher;
                 }
@@ -166,7 +171,7 @@ public class Book implements IEntity , Serializable {
             try {
                 String checkDescription = scanner.nextLine();
                 if (checkDescription.trim().isEmpty()) {
-                    System.out.println("Not empty description");
+                    System.err.println("Not empty description");
                 } else {
                     return checkDescription;
                 }
@@ -180,17 +185,17 @@ public class Book implements IEntity , Serializable {
     public int checkCategoryId(Scanner scanner) {
         do {
             try {
-                Boolean isExists = true;
+                Boolean isExists = false;
                 int checkCategoryId = Integer.parseInt(scanner.nextLine());
                 for (Category category : listCategory) {
-                    if ( category.getId() != checkCategoryId) {
-                        isExists = false;
+                    if (category.getId() == checkCategoryId) {
+                        isExists = true;
                         break;
                     }
                 }
                 if (isExists) {
-                    return checkCategoryId ;
-                }else {
+                    return checkCategoryId;
+                } else {
                     System.err.println("Category id is not exist");
 
                 }
@@ -208,7 +213,7 @@ public class Book implements IEntity , Serializable {
     public void updateBook(Scanner scanner) {
         boolean isExit = true;
         do {
-            System.out.println("===== Update information book =====");
+            System.out.println("===== Update book =====");
             System.out.println("1. Update book id ");
             System.out.println("2. Update book title ");
             System.out.println("3. Update author ");
@@ -253,11 +258,10 @@ public class Book implements IEntity , Serializable {
                     isExit = false;
                     break;
                 default:
-<<<<<<< HEAD
-                    System.err.println("Please enter 1-8");
-=======
-                    System.out.println("Please enter 1-8");
->>>>>>> origin/main
+
+                    System.err.println("Please enter 1-8 !");
+
+
                     break;
 
             }
@@ -275,9 +279,12 @@ public class Book implements IEntity , Serializable {
 
     public String getTitle() {
         return title;
+
+
     }
 
     public void setTitle(String title) {
+
         this.title = title;
     }
 
@@ -294,6 +301,7 @@ public class Book implements IEntity , Serializable {
     }
 
     public void setPublisher(String publisher) {
+
         this.publisher = publisher;
     }
 
@@ -323,7 +331,9 @@ public class Book implements IEntity , Serializable {
 
     @Override
     public String toString() {
-        return String.format(" | %-4s | %-25s | %-20s | %-15s | %-5d | %-20s | %-6s |"
-                , this.id , this.title , this.author , this.publisher , this.year , this.description , this.categoryId);
+        return String.format("| %-4s | %-20s | %-15s | %-15s | %-4d | %-20s | %-9d |"
+                , this.id, this.title, this.author,   this.publisher,this.year ,  this.description,this.categoryId);
+
+
     }
 }

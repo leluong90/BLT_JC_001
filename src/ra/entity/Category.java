@@ -36,6 +36,8 @@ public class Category implements IEntity, Serializable {
 
     @Override
     public void output() {
+        this.id = getId();
+
 
     }
 
@@ -55,18 +57,16 @@ public class Category implements IEntity, Serializable {
                     if (isUniqueId){
                         return checkId;
                     }else {
-                        System.err.println("Exists , please enter category id again :");
+                        System.err.println("Exists , please enter again :");
 
                     }
 
 
                 } else {
-                    System.err.println("Please enter category id is interger :");
+                    System.err.println("Please enter number !");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Please enter interger :");
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.err.println("Please enter number !");
             }
         } while (true);
 
@@ -84,7 +84,7 @@ public class Category implements IEntity, Serializable {
     public String checkCategory(Scanner scanner) {
         do {
             try {
-                String newNameCategory = scanner.nextLine();
+                String newNameCategory = (scanner.nextLine()).trim();
                 boolean isExists = false;
 
                 if (newNameCategory.length() >= 6 && newNameCategory.length() <= 30) {
@@ -100,8 +100,11 @@ public class Category implements IEntity, Serializable {
                         return newNameCategory;
                     }
                 }
+                else {
+                    System.err.println("Please enter name category 6-30 character");
+                }
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.err.println("Please enter new name category");
             }
 
         } while (true);
@@ -119,7 +122,7 @@ public class Category implements IEntity, Serializable {
                     System.err.println("Enter true|false :");
                 }
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.err.println("Enter true|false :");
             }
 
         } while (true);
@@ -154,7 +157,7 @@ public class Category implements IEntity, Serializable {
                     isExit = false;
                     break;
                 default:
-                    System.err.println("Please enter 1-4 :");
+                    System.err.println("Please enter 1-4 !");
                     break;
 
             }
